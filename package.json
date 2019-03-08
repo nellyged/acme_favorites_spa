@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run webpack:dev",
+    "postinstall": "./node_modules/webpack/bin/webpack.js",
     "start:db": "DATABASE_URL=postgres://localhost/acme_favs_db nodemon ./db/index.js",
     "start:server": "DATABASE_URL=postgres://localhost/acme_favs_db nodemon ./server.js",
     "webpack": "webpack",
