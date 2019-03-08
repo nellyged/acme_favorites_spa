@@ -4,17 +4,35 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm run webpack:dev",
     "start:db": "DATABASE_URL=postgres://localhost/acme_favs_db nodemon ./db/index.js",
-    "start:server": "DATABASE_URL=postgres://localhost/acme_favs_db nodemon ./server.js"
+    "start:server": "DATABASE_URL=postgres://localhost/acme_favs_db nodemon ./server.js",
+    "webpack": "webpack",
+    "webpack:dev": "npm run webpack -- --mode=development --watch",
+    "start:dev": "npm run webpack:dev & npm run start:server --ignore src/ --ignore dist/"
+  },
+  "babel": {
+    "presets": [
+      "react",
+      "stage-2"
+    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.10",
     "pg": "^7.8.2",
-    "sequelize": "^4.43.0"
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "sequelize": "^4.43.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
   }
 }
