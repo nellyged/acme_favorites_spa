@@ -1,0 +1,20 @@
+{
+  "name": "acme_favorites_spa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:db": "DATABASE_URL=postgres://localhost/acme_favs_db nodemon ./db/index.js",
+    "start:server": "DATABASE_URL=postgres://localhost/acme_favs_db nodemon ./server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.10",
+    "pg": "^7.8.2",
+    "sequelize": "^4.43.0"
+  }
+}
