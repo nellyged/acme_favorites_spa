@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HashRouter, Route } from 'react-router-dom';
+import { Redirect, HashRouter, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 import Users from './Users';
 import Things from './Things';
@@ -51,12 +51,7 @@ export default class App extends Component {
           {/* placed in a route so I can get addiotnal info and still pass my own props. Remember to explicitly pass location, history, match when using the render on the route */}
           <Route
             render={props => (
-              <Navbar
-                tabs={this.state.tabs}
-                location={props.location}
-                histtory={props.history}
-                match={props.match}
-              />
+              <Navbar tabs={this.state.tabs} location={props.location} />
             )}
           />
           <Route
@@ -67,12 +62,13 @@ export default class App extends Component {
             path="/things"
             render={() => <Things things={this.state.things} />}
           />
-          {/* how do I ensure the url updates to Users for this catch all */}
+          {/* make sure that if the user comes in with nothing after the slash we direct to a tab */}
           <Route
             exact
             path="/"
             render={() => <Users users={this.state.users} />}
           />
+          <Redirect to="/users" />
         </div>
       </HashRouter>
     );
