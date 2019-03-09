@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { getUsers, getThings } = require('./db');
+const { getUsers, getThings, getNavTitles, getFavs } = require('./db');
 const morgan = require('morgan');
 const path = require('path');
 
@@ -16,23 +16,40 @@ app.get('/app.js', (req, res, next) =>
   res.sendFile(path.join(__dirname, 'dist', 'main.js'))
 );
 
-//Redirect to the default which is users
-app.get('/', (req, res, next) => {
-  res.redirect('/users');
-});
-
 app.get('/users', (req, res, next) => {
   getUsers()
     .then(users => {
-      res.send(users);
+      res.send(
+        users.map(user => {
+          user.fav = [];
+          return user;
+        })
+      );
     })
     .catch(next);
 });
 
 app.get('/things', (req, res, next) => {
   getThings()
-    .then(things => res.send(things))
+    .then(things => {
+      res.send(
+        things.map(user => {
+          user.fav = [];
+          return user;
+        })
+      );
+    })
     .catch(next);
+});
+
+app.get('/favorites', (req, res, next) => {
+  getFavs()
+    .then(favs => res.send(favs))
+    .catch(next);
+});
+
+app.get('/navItems', (req, res, next) => {
+  getNavTitles().then(titles => res.send(titles));
 });
 
 // Handle 404s

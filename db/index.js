@@ -74,6 +74,30 @@ const getThings = () => {
   });
 };
 
+const getFavs = () => {
+  return Favorite.findAll({
+    include: [{ all: true }],
+  }).then(favs => {
+    const favsToReturn = Object.keys(favs).map(key => {
+      return favs[key].get();
+    });
+    return favsToReturn;
+  });
+};
+
+const getNavTitles = async () => {
+  const userLen = await getUsers().then(users => {
+    return users.length;
+  });
+  const thingLen = await getThings().then(things => {
+    return things.length;
+  });
+  return {
+    users: userLen,
+    things: thingLen,
+  };
+};
+
 module.exports = {
   syncAndSeed,
   models: {
@@ -83,4 +107,6 @@ module.exports = {
   },
   getUsers,
   getThings,
+  getFavs,
+  getNavTitles,
 };
