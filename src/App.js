@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, HashRouter, Route } from 'react-router-dom';
+import { Switch, Redirect, HashRouter, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 import Users from './Users';
 import Things from './Things';
@@ -31,7 +31,7 @@ export default class App extends Component {
       favsHold = favs.data;
     });
 
-    //Concat the favs to the users and things
+    //Add the favs to the users and things
     usersHold.map(user => {
       user.fav = favsHold.filter(fav => fav.userId === user.id);
       return user;
@@ -54,21 +54,18 @@ export default class App extends Component {
               <Navbar tabs={this.state.tabs} location={props.location} />
             )}
           />
-          <Route
-            path="/users"
-            render={() => <Users users={this.state.users} />}
-          />
-          <Route
-            path="/things"
-            render={() => <Things things={this.state.things} />}
-          />
-          {/* make sure that if the user comes in with nothing after the slash we direct to a tab */}
-          <Route
-            exact
-            path="/"
-            render={() => <Users users={this.state.users} />}
-          />
-          <Redirect to="/users" />
+          <Switch>
+            <Route
+              path="/users"
+              render={() => <Users users={this.state.users} />}
+            />
+            <Route
+              path="/things"
+              render={() => <Things things={this.state.things} />}
+            />
+            {/* make sure that if the user comes in with nothing after the slash we direct to a tab. Is it okay if a person puts in /whatever they still get redirected to /users? shouldn't they see 404? */}
+            <Redirect to="/users" />
+          </Switch>
         </div>
       </HashRouter>
     );
